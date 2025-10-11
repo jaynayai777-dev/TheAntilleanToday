@@ -1,0 +1,88 @@
+{{ range .Site.Menus.main }}
+  {{ if .HasChildren }}
+    <div x-data="{ subMenuOpen: false }" class="hs-menus">
+      <button
+        @click="subMenuOpen = !subMenuOpen"
+        type="button"
+        :class="{ 'text-[--hs-text-color-hover]': subMenuOpen, 'text-gray-900': !subMenuOpen, 'dark:text-[--hs-text-color-hover]': subMenuOpen, 'dark:text-white': !subMenuOpen }"
+        class="group flex w-full flex-col items-center justify-center rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:text-[--hs-text-color-hover]"
+        aria-controls="disclosure-1"
+        aria-expanded="false">
+        <span>{{ .Name | safeHTML }}</span>
+        <svg
+          :class="{ 'rotate-180': subMenuOpen }"
+          class="size-4 flex-none transition"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true">
+          <path
+            fill-rule="evenodd"
+            d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+      <div
+        x-show="subMenuOpen"
+        x-cloak
+        x-collapse
+        class="flex flex-col space-y-1"
+        id="disclosure-1">
+        {{ range .Children }}
+          <a
+            href="{{ .URL | relLangURL }}"
+            class="w-full rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+            >{{ .Name | safeHTML }}</a
+          >
+        {{ end }}
+
+      </div>
+    </div>
+  {{ else }}
+    <a
+      href="{{ .URL | relLangURL }}"
+      class="hs-menus w-full rounded-lg px-3 py-2 text-center text-base font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+      >{{ .Name | safeHTML }}</a
+    >
+  {{ end }}
+{{ end }}
+
+{{ if not .Site.Params.omitCategoryOnMenu }}
+  <div x-data="{ subMenuOpen: false }" class="hs-menus">
+    <button
+      @click="subMenuOpen = !subMenuOpen"
+      type="button"
+      :class="{ 'text-[--hs-text-color-hover]': subMenuOpen, 'text-gray-900': !subMenuOpen, 'dark:text-[--hs-text-color-hover]': subMenuOpen, 'dark:text-white': !subMenuOpen }"
+      class="group flex w-full flex-col items-center justify-center rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:text-[--hs-text-color-hover] dark:text-white"
+      aria-controls="disclosure-1"
+      aria-expanded="false">
+      {{ .Site.Params.categoryName | safeHTML }}
+      <svg
+        :class="{ 'rotate-180': subMenuOpen }"
+        class="size-4 flex-none transition"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true">
+        <path
+          fill-rule="evenodd"
+          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+          clip-rule="evenodd" />
+      </svg>
+    </button>
+
+    <div
+      x-show="subMenuOpen"
+      x-cloak
+      x-collapse
+      class="flex flex-col space-y-1"
+      id="disclosure-1">
+      {{ range .Site.Taxonomies.categories }}
+        <a
+          href="{{ .Page.Permalink }}"
+          class="block rounded-lg px-3 py-2 text-center text-sm font-semibold leading-7 text-gray-900 hover:text-[--hs-text-color-hover] dark:text-white"
+          >{{ .Page.Title | safeHTML }}</a
+        >
+      {{ end }}
+
+    </div>
+  </div>
+{{ end }}

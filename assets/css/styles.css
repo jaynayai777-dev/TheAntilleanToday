@@ -1,0 +1,236 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Scrollbar */
+/* 整个滚动条，可以设置任意的尺寸大小，包括 0，也就是滚动条不可见 */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* 可拖拽的那个滑杆 */
+*::-webkit-scrollbar-thumb {
+  background: var(--hs-scrollbar-color);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--hs-scrollbar-color-hover);
+  opacity: 1;
+  display: block !important;
+}
+
+/* 滚动条的轨道 */
+*::-webkit-scrollbar-track {
+  background-color: #00000000;
+}
+
+/* Fix jumping scrollbar issue */
+/* :root {
+  scrollbar-gutter: stable;
+} */
+
+html {
+  overflow-y: scroll;
+}
+
+:root {
+  /* 主题相关变量 */
+  --hs-border-color: theme(colors.blue.700);
+  --hs-decoration-color: theme(colors.blue.700);
+  --hs-text-color-hover: theme(colors.blue.700);
+  --hs-text-color-hover-dark: theme(colors.blue.500);
+  --hs-link-color: theme(colors.blue.700);
+
+  --hs-toc-active-border-color: theme(colors.blue.700);
+  --hs-toc-active-bg-color: theme(colors.blue.50);
+  --hs-toc-active-bg-color-dark: theme(colors.gray.800/85);
+  --hs-toc-active-text-color: theme(colors.blue.700);
+  --hs-toc-active-text-color-dark: theme(colors.blue.500);
+
+  --hs-scrollbar-color: theme(colors.gray.400/40);
+  --hs-scrollbar-color-hover: theme(colors.blue.700);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+:root body {
+  position: absolute;
+}
+
+body {
+  width: 100vw;
+}
+
+@layer base {
+  @font-face {
+    font-family: "Antonio";
+    font-display: swap;
+    src: url(/font/Antonio-subset.woff2) format("woff2");
+  }
+}
+
+@layer components {
+  .image-gradient {
+    mask: linear-gradient(#000, transparent);
+  }
+
+  .hs-index-number {
+    @apply font-IndexNumb;
+  }
+
+  .hs-archive-year {
+    @apply font-Oswald;
+  }
+  .hs-archive-date {
+    @apply font-Oswald font-extralight;
+  }
+
+  .hs-search-other {
+    @apply font-Oswald;
+  }
+}
+
+.theme-toc {
+  @apply flex border-s-[3px] border-gray-300 p-2 text-gray-500 hover:border-gray-600 hover:bg-gray-50 hover:text-gray-700 dark:border-gray-600 dark:text-gray-500 dark:hover:bg-gray-800/85 dark:hover:text-gray-300 lg:border-gray-100;
+}
+
+.theme-toc-active {
+  @apply flex border-s-[3px] border-[--hs-toc-active-border-color] bg-[--hs-toc-active-bg-color] p-2 text-[--hs-toc-active-text-color] dark:bg-[--hs-toc-active-bg-color-dark] dark:text-[--hs-toc-active-text-color-dark];
+}
+
+.theme-toc-nest-1 {
+  @apply pl-4;
+}
+
+.theme-toc-nest-2 {
+  @apply pl-5;
+}
+
+.theme-toc-nest-3 {
+  @apply pl-6;
+}
+
+/* 圆形按钮特效 */
+.buttom-circle {
+  @apply rounded-full shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:scale-105 active:scale-[.95];
+}
+
+/* Code copy button */
+div.highlight,
+pre {
+  position: relative;
+}
+
+.codeblock-copy {
+  @apply absolute right-2 top-2 mx-auto flex h-7 w-7 items-center justify-center rounded-md border border-transparent duration-300 hover:border-gray-300 active:ring-2 active:ring-gray-300 dark:hover:border-gray-700 dark:active:ring-gray-700;
+}
+
+.icon-copy {
+  @apply h-5 w-5 fill-gray-300 dark:fill-gray-500;
+}
+
+.icon-copied {
+  @apply h-5 w-5;
+}
+
+/* Twikoo comment */
+.twikoo {
+  @apply w-full px-0.5 py-5 dark:text-gray-400 md:px-2 lg:max-w-5xl lg:px-8;
+}
+
+.tk-submit .tk-row .tk-avatar {
+  @apply hidden;
+}
+
+.tk-row.actions {
+  @apply mx-0 !important;
+}
+
+.tk-input.el-textarea > textarea {
+  @apply h-28 min-h-28 !important;
+}
+
+.tk-expand {
+  @apply rounded-lg dark:hover:bg-gray-600;
+}
+
+/* goods.html */
+.goods-item-hidden {
+  opacity: 0;
+  transform: translateY(6%);
+  transition:
+    opacity 0.4s ease,
+    transform 0.8s ease;
+}
+
+.slide-top {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+:is(:where(.dark) .dark\:bg-gray-900\/80) {
+  background-color: rgb(17 24 39 / 0.8);
+}
+
+/* flowbite-typography 引用语法修改 */
+.format
+  :where(blockquote p:first-of-type):not(
+    :where([class~="not-format"] *)
+  )::before {
+  content: "" !important;
+}
+
+.format
+  :where(blockquote p:last-of-type):not(
+    :where([class~="not-format"] *)
+  )::after {
+  content: "" !important;
+}
+
+.format :where(blockquote):not(:where([class~="not-format"] *))::before {
+  display: none !important;
+  background-image: none !important;
+}
+
+.format
+  :where(blockquote):not(
+    :where([class~="not-format"], [class~="not-format"] *)
+  ) {
+  font-weight: 500;
+  font-style: italic;
+  color: var(--tw-format-quotes);
+  border-left-width: 0.25rem;
+  border-left-color: var(--tw-format-quote-borders);
+  quotes: "\201C" "\201D" "\2018" "\2019";
+  margin-top: 1.6em;
+  margin-bottom: 1.6em;
+  padding-left: 1em;
+}
+
+.format :where(a):not(:where([class~="not-format"] *)) {
+  color: var(--tw-format-links);
+  text-decoration: underline;
+  text-decoration-thickness: 1px !important;
+  text-underline-offset: 2px;
+  font-weight: 500;
+}
+
+.format :where(a):not(:where([class~="not-format"] *)):hover {
+  color: var(--hs-link-color);
+  text-decoration: underline !important;
+  text-decoration-color: var(--hs-decoration-color) !important;
+  text-decoration-thickness: 2px !important;
+}
+
+/* 图片预览 */
+.modal {
+  @apply fixed left-0 top-0 z-[99] h-full w-full cursor-zoom-out touch-none select-none bg-white/75 backdrop-blur-lg dark:bg-black/75;
+}
+
+.modal > img {
+  @apply absolute m-0 p-0;
+}

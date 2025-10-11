@@ -1,0 +1,89 @@
+{{/* Search */}}
+<div
+  id="search-overlay"
+  class="fixed inset-0 z-50 hidden bg-gray-900/90 backdrop-blur-lg dark:bg-gray-900/80"></div>
+<section
+  id="search-section"
+  class="hs-search z-50 flex hidden h-dvh w-full flex-col">
+  {{/* Search div */}}
+  <div
+    class="flex h-dvh w-full flex-col overflow-auto md:mx-auto md:w-2/3 lg:max-w-2xl">
+    {{/* Search input */}}
+    <div
+      id="searchBoxDiv"
+      class="hs-search-input-wrapper sticky top-[-88px] z-50 flex flex-row justify-between px-8 pt-[88px]">
+      <div id="searchBox" class="my-6 flex w-full flex-row items-center"></div>
+    </div>
+
+    {{/* Search result */}}
+    <div class="hs-search-results-wrapper h-[30rem] overflow-auto">
+      <div id="searchResults" class="hs-search-results my-3 px-6"></div>
+      <div
+        id="NotSearchResults"
+        class="hidden flex-col items-center justify-around space-y-4 px-6 py-10">
+        <p
+          class="hs-search-no-results text-lg font-bold tracking-wide text-gray-500">
+          {{ T "search.no_result" }}
+        </p>
+      </div>
+      <div
+        id="searchError"
+        class="hidden flex-col items-center justify-around space-y-4 px-6 py-10 text-center ">
+        <p class="hs-search-error text-lg font-bold text-red-500">
+          {{ T "search.error " }}
+        </p>
+      </div>
+      <div
+        id="searchLoading"
+        class="hidden flex-col items-center justify-around px-6 py-10">
+        <svg
+          t="1689331200868"
+          class="icon animate-spin"
+          viewBox="0 0 1024 1024"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          p-id="51409"
+          width="128"
+          height="128">
+          <path
+            d="M512 170.666667v85.333333a256 256 0 1 1-223.573333 131.2L213.930667 345.6A341.333333 341.333333 0 1 0 512 170.666667z"
+            fill="#bfbfbf"
+            opacity=".3"
+            p-id="51410"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+  {{/* logo */}}
+  <div
+    class="hs-search-other bottom-0 flex flex-col items-center justify-center space-y-2 py-8 text-xs font-bold text-gray-600">
+    <div class="hs-search-cancel hidden md:block">
+      {{ T "search.cancel" }}
+    </div>
+    <div class="hs-search-powered_by flex items-center justify-center">
+      {{ $algolia := printf `<img src="/images/default/algolia-logo.svg" alt="" class="h-4" />` }}
+      {{ T "search.powered_by" (dict "Name" $algolia) | safeHTML }}
+    </div>
+  </div>
+</section>
+
+<script
+  src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.2/dist/algoliasearch-lite.umd.js"
+  integrity="sha256-X2G+vjV8i6Jj2NSGFTvy6Z4q2AlmF5aH0HiIpWJ8eU4="
+  crossorigin="anonymous"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.56.3/dist/instantsearch.production.min.js"
+  integrity="sha256-mWvjWAfZylKMOg+S3HLq+wng1HHRnl2Idr2r8NsUzIU="
+  crossorigin="anonymous"></script>
+{{ $placeholder := (T "search.placeholder") }}
+{{ $app_id := .algolia.app_id }}
+{{ $api_key := .algolia.api_key }}
+{{ $index := .algolia.index }}
+{{ $snippet := .algolia.snippet_attr }}
+{{ $highlight := .algolia.highlight_attr }}
+{{ $algoliaInfo := dict "placeholder" $placeholder "api_id" $app_id "api_key" $api_key "index" $index "snippet" $snippet "highlight" $highlight }}
+{{ $searchJS := resources.Get "/js/search.js" | js.Build (dict "params" $algoliaInfo) }}
+{{ if hugo.IsProduction }}
+  {{ $searchJS = $searchJS | minify | fingerprint }}
+{{ end }}
+<script src="{{ $searchJS.RelPermalink }}"></script>

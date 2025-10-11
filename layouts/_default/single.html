@@ -1,0 +1,250 @@
+{{- define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end -}}
+{{- define "extra_link" }}
+  {{ if not (.Site.Params.disableHightlight | default false ) }}
+    {{ $syntax := resources.Get "/css/syntax.css" }}
+    {{ $syntax = $syntax | css.PostCSS (dict "inlineImports" true) }}
+    {{ if hugo.IsProduction }}
+      {{ $syntax = $syntax | minify | fingerprint | resources.PostProcess }}
+    {{ end }}
+    <link href="{{ $syntax.RelPermalink }}" rel="stylesheet" />
+  {{ end }}
+
+{{- end -}}
+{{ define "main" }}
+  {{ $metaInfo := .Site.Params.articleMeta }}
+  {{ $image := resources.Get .Params.image }}
+
+  {{ if $image }}
+    <div id="hs-feature" class="h-60 w-full md:h-120">
+      <img
+        x-data="{ isGradient: {{ $metaInfo.disableImgGradient | default false }} }"
+        :class="{ 'image-gradient': !isGradient }"
+        class="h-60 w-full object-cover md:h-120"
+        src="{{ $image.Permalink }}"
+        alt="Hero Image of content"
+        srcset="" />
+    </div>
+  {{ else }}
+    <div id="hs-feature" class="h-60 w-full md:h-120">
+      {{- partial "random_feature_img.html" . -}}
+    </div>
+  {{ end }}
+
+
+  <div
+    id="hs-content-container"
+    class="my-5 w-full rounded-b-lg px-5 md:px-10 lg:px-1">
+    <div
+      class="mx-auto flex max-w-screen-xl lg:grid lg:grid-flow-col lg:grid-cols-4 xl:grid-cols-5">
+      {{/* Left side */}}
+      {{ partial "content_left_section.html" . }}
+      {{/* Content */}}
+      <div id="hs-container" class="mx-auto w-full lg:col-span-2 xl:col-span-3">
+        <div class="py-5 md:px-1 lg:px-5">
+          <div class="flex w-full flex-col">
+            <div
+              class="hs-content-meta flex flex-row flex-wrap items-center space-x-1 pb-2 pt-1 text-xs font-normal tracking-wide text-gray-500/90 dark:text-gray-500">
+              {{ $categories := (.GetTerms "categories") }}
+              <span class="hs-content-category flex flex-row gap-1">
+                {{ range $categories }}
+                  <span class="italic text-red-700"> > </span>
+                  <a
+                    class="hover:text-[--hs-text-color-hover] hover:underline hover:decoration-[--decoration-color] hover:underline-offset-4"
+                    href="{{ .Permalink }}"
+                    >{{- .LinkTitle -}}</a
+                  >
+                {{ end }}
+              </span>
+            </div>
+            <div
+              id="hs-content-title"
+              class="hs-content-title py-1 text-start text-3xl font-bold tracking-wide text-black dark:text-white lg:text-4xl">
+              {{ .Title }}
+            </div>
+
+            <div
+              class="hs-content-meta flex flex-row flex-wrap items-center space-x-1 pb-1 pt-3.5 text-xs font-extralight tracking-wide text-gray-500/90 dark:text-gray-600">
+              <span>{{ .Date.Format "2006/01/02" }}</span>
+              <div
+                class="h-1 w-1 rounded-full bg-red-700 dark:bg-red-700/50"></div>
+              <span>{{- .WordCount -}}&nbsp;{{ T "article.words" }}</span>
+              <div
+                class="h-1 w-1 rounded-full bg-red-700 dark:bg-red-700/50"></div>
+              <span>{{- .ReadingTime -}}&nbsp;{{ T "article.minutes" }}</span>
+              {{ if .Site.Params.articleMeta.enablePageView }}
+                <div
+                  class="h-1 w-1 rounded-full bg-red-700 dark:bg-red-700/50"></div>
+                <p>
+                  <span
+                    id="twikoo_visitors"
+                    class="page-info-pageview-count"
+                    data-path="{{ .RelPermalink }}"
+                    >...</span
+                  >
+                  &nbsp;{{ T "article.visits" }}
+                </p>
+              {{ end }}
+              {{ if and (not .Params.disableComment) .Site.Params.comment.enable }}
+                {{ if and .Site.Params.comment.enableCounts }}
+                  <div
+                    class="h-1 w-1 rounded-full bg-red-700 dark:bg-red-700/50"></div>
+                  <button
+                    x-data
+                    @click="toComment()"
+                    id="speed-comment-count-id"
+                    class="whitespace-nowrap hover:text-[--hs-text-color-hover] hover:underline hover:decoration-[--hs-decoration-color] hover:underline-offset-4">
+                    <span
+                      class="waline-comment-count"
+                      data-path="{{ .RelPermalink }}"
+                      >...</span
+                    >
+                    &nbsp;{{ T "article.comments" }}
+                  </button>
+                {{ end }}
+              {{ end }}
+            </div>
+          </div>
+
+          {{ if and (gt .WordCount 300 ) (not .Params.disableToc) }}
+            <div x-data="{ open: false }" class="mt-5 lg:hidden">
+              <button
+                type="button"
+                x-on:click="open = !open"
+                class="flex w-full cursor-pointer items-center justify-start rounded-lg py-2 text-gray-500/90 hover:text-gray-700 dark:hover:text-gray-300">
+                <span class="shrink-0">
+                  <svg
+                    :class="{ 'rotate-90': open }"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="size-6 transition"
+                    fill="currentColor"
+                    viewBox="0 -960 960 960">
+                    <path d="M400-280v-400l200 200-200 200Z" />
+                  </svg>
+                </span>
+
+                <span class="hs-toc-title text-sm font-medium">
+                  {{ T "toc.mobile_title" }}
+                </span>
+              </button>
+              <div
+                x-cloak
+                x-show="open"
+                x-collapse.duration.1000ms
+                x-on:keydown.escape.window="open = false"
+                class="hs-toc mb-3 mt-1 space-y-1 px-2">
+                {{ .TableOfContents }}
+              </div>
+            </div>
+          {{ end }}
+
+
+          <div
+            id="hs-content"
+            class="hs-content format mx-auto mt-2 max-w-none dark:format-invert md:format-base format-figure:flex format-figure:flex-col format-figure:items-center format-img:cursor-zoom-in dark:text-gray-300 lg:mt-11">
+            {{ .Content }}
+          </div>
+
+          <div class="hs-content-meta pb-5 pt-3">
+            {{ $tags := (.GetTerms "tags") }}
+            <span
+              class="hs-content-tag flex flex-row flex-wrap justify-start gap-2 pl-1 text-sm font-normal tracking-wide text-gray-500/90 dark:text-gray-500">
+              {{ range $tags }}
+                <a
+                  class="text-center hover:text-[--hs-text-color-hover]"
+                  href="{{ .Permalink }}"
+                  ><span class="text-red-700 ">#</span
+                  ><span
+                    class="hover:text-[--hs-text-color-hover] hover:underline hover:decoration-[--decoration-color] hover:underline-offset-4"
+                    >{{- .LinkTitle -}}</span
+                  ></a
+                >
+              {{ end }}
+            </span>
+          </div>
+        </div>
+      </div>
+      {{/* Right side */}}
+      {{ partial "content_right_section.html" . }}
+    </div>
+
+    {{/* comments */}}
+    {{ if and (not .Params.disableComment) .Site.Params.comment.enable }}
+      <div
+        id="hs-comment"
+        class="mx-auto max-w-screen-xl lg:grid lg:grid-cols-4 xl:grid-cols-5">
+        <span class="hidden lg:block"></span>
+        <div class="items-stretch lg:col-span-2 lg:col-start-2 xl:col-span-3">
+          {{- partial "comments.html" . -}}
+        </div>
+      </div>
+    {{ end }}
+
+  </div>
+
+  {{/* To top button */}}
+  {{ if not (.Site.Params.disableToTop | default false ) }}
+    <button
+      x-data="{
+        show: false,
+        init() {
+          window.addEventListener('scroll', () => {
+            this.show = window.scrollY > 100
+          })
+        }
+      }"
+      x-show="show"
+      @click="window.scrollTo({ top: 0, behavior: 'smooth' })"
+      x-cloak
+      type="button"
+      class="buttom-circle fixed bottom-24 end-8 flex h-14 w-14 items-center justify-center bg-white/85 text-gray-500 backdrop-blur-md dark:bg-gray-800/85 dark:text-gray-500 md:end-20">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="size-6"
+        fill="currentColor"
+        viewBox="0 -960 960 960">
+        <path
+          d="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z" />
+      </svg>
+      <span class="sr-only">Go to Top</span>
+    </button>
+  {{ end }}
+
+{{ end }}
+
+{{ define "script" }}
+  {{ $tocJS := resources.Get "/js/toc.js" }}
+  {{ if hugo.IsProduction }}
+    {{ $tocJS = $tocJS | minify | fingerprint }}
+  {{ end }}
+  <script src="{{ $tocJS.RelPermalink }}"></script>
+
+  {{ $zoomJS := resources.Get "/js/zoom-img.js" }}
+  {{ if hugo.IsProduction }}
+    {{ $zoomJS = $zoomJS| minify | fingerprint }}
+  {{ end }}
+  <script src="{{ $zoomJS.RelPermalink }}" defer></script>
+
+  {{ $linkTopJS := resources.Get "/js/link-to-top.js" }}
+  {{ if hugo.IsProduction }}
+    {{ $linkTopJS = $linkTopJS | minify | fingerprint }}
+  {{ end }}
+  <script src="{{ $linkTopJS.RelPermalink }}" defer></script>
+
+  {{ if not (.Site.Params.disableCodeCopyButton | default false ) }}
+    {{ $codeCopyJS := resources.Get "/js/code-copy.js" }}
+    {{ if hugo.IsProduction }}
+      {{ $codeCopyJS = $codeCopyJS | minify | fingerprint }}
+    {{ end }}
+    <script src="{{ $codeCopyJS.RelPermalink }}" defer></script>
+  {{ end }}
+
+
+  <script>
+    function toComment() {
+      window.scrollTo({
+        top: document.getElementById("hs-comment").offsetTop - 100,
+        behavior: "smooth",
+      });
+    }
+  </script>
+{{ end }}

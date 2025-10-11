@@ -1,0 +1,65 @@
+{{/* Pagination */}}
+{{ $pag := .Paginator }}
+{{ if gt $pag.TotalPages 1 }}
+  {{ $hadPageNumbers := sub $pag.PageNumber 1 }}
+  {{ $hadTotleOfEles := mul $pag.PageSize $hadPageNumbers }}
+
+
+  <div class="mt-5 flex flex-col items-center">
+    <!-- Help text -->
+    <span class="hs-pagination-info text-sm text-gray-700 dark:text-gray-400">
+      Showing
+      <span class="font-semibold text-gray-900 dark:text-white"
+        >{{ add 1 $hadTotleOfEles }}</span
+      >
+      to
+      <span class="font-semibold text-gray-900 dark:text-white"
+        >{{ add $pag.NumberOfElements $hadTotleOfEles }}</span
+      >
+      of
+      <span class="font-semibold text-gray-900 dark:text-white"
+        >{{ $pag.TotalNumberOfElements }}</span
+      >
+      Entries
+    </span>
+    <div class="hs-pagination xs:mt-0 mt-2 inline-flex">
+      <!-- Buttons -->
+      <a
+        href="{{ if $pag.HasPrev }}{{ $pag.Prev.URL }}{{ end }}"
+        class="flex h-10 items-center justify-center rounded-l-lg border border-gray-300 bg-white px-4 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        <svg
+          class="me-2 h-3.5 w-3.5 rtl:rotate-180"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 10">
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 5H1m0 0 4 4M1 5l4-4" />
+        </svg>
+        Prev
+      </a>
+      <a
+        href="{{ if $pag.HasNext }}{{ $pag.Next.URL }}{{ end }}"
+        class="flex h-10 items-center justify-center rounded-r-lg border border-gray-300 bg-white px-4 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+        Next
+        <svg
+          class="ms-2 h-3.5 w-3.5 rtl:rotate-180"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 14 10">
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 5h12m0 0L9 1m4 4L9 9" />
+        </svg>
+      </a>
+    </div>
+  </div>
+{{ end }}

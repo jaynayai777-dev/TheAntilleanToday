@@ -1,0 +1,88 @@
+<header x-data="{ isMobile: false }" class="z-40 h-38 w-full flex-shrink-0">
+  <nav
+    id="nav"
+    :class="{ 'h-25': shrink, 'h-38': !shrink, 'shadow-md': shrink, 'bg-white/85': shrink, 'dark:bg-gray-900/85': shrink, 'backdrop-blur-md': shrink}"
+    class="fixed inset-0 mx-auto flex h-38 items-center justify-between px-4 transition-all duration-500 ease-in-out"
+    aria-label="Global">
+    <div
+      class="mx-auto flex w-screen flex-wrap items-center justify-between place-self-center object-center px-1 md:w-[1000px] md:px-4">
+      <div class="flex lg:flex-1">
+        {{- partial "header/logo.html" . -}}
+      </div>
+
+      <div class="hidden lg:flex lg:gap-x-6">
+        {{ partial "header/menu.html" . }}
+      </div>
+
+      <div class="flex flex-1 items-center justify-end">
+        {{- partial "header/i18n_menu.html" . -}}
+
+        {{- partial "header/dark_mode.html" . -}}
+
+        {{- partial "header/search.html" . -}}
+
+
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            @click="isMobile = true; scrollY = window.scrollY; document.body.style.overflow = 'hidden';"
+            class="group inline-flex items-center justify-center rounded-full p-2.5 text-center text-black transition hover:bg-white hover:shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:shadow-[0_5px_15px_rgba(0,0,0,0.35)]">
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="size-5"
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              p-id="9670">
+              <path
+                d="M904 160H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zM904 784H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zM904 472H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8z"
+                p-id="9671"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div x-show="isMobile" x-cloak role="dialog" aria-modal="true">
+    <div class="fixed inset-0 z-10"></div>
+    <div
+      class="fixed inset-0 z-10 w-full overflow-y-auto bg-white/85 p-4 backdrop-blur-md dark:bg-gray-900/85 sm:ring-1 sm:ring-gray-900/10">
+      <div class="mx-auto mt-10 flex w-full items-center justify-center">
+        {{- partial "header/logo.html" . -}}
+      </div>
+
+      <div class="mt-6 flow-root">
+        <div class="-my-6 divide-y divide-gray-500/10">
+          <div class="flex flex-col space-y-2 py-6">
+            {{ partial "header/mobile_menu.html" . }}
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 flex h-12 w-full flex-col items-center justify-center">
+        <button
+          @click="isMobile = false; document.body.style.overflow = ''; window.scrollTo(0, scrollY);"
+          class="buttom-circle flex h-12 w-12 items-center justify-center rounded-full bg-white/85 p-3 text-gray-900 backdrop-blur-md  hover:text-gray-500 dark:bg-gray-800/85 dark:text-gray-200">
+          <span class="sr-only">Close mobile menu</span>
+          <svg
+            fill="currentColor"
+            class="h-4 w-4"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="5967">
+            <path
+              d="M143.616 47.104l830.08 830.08c26.24 26.24 26.24 69.888 0 96.128-26.24 26.24-69.888 26.24-96.128 0L47.488 143.232c-17.536-26.24-17.536-69.888 0-96.128 26.24-26.24 69.888-26.24 96.128 0z m0 0"
+              p-id="5968"></path>
+            <path
+              d="M982.528 143.232L152.32 973.312c-26.24 26.24-69.888 26.24-96.128 0-26.24-26.24-26.24-69.888 0-96.128L886.4 47.104c26.24-26.24 69.888-26.24 96.128 0 17.408 26.24 17.408 69.888 0 96.128z m0 0"
+              p-id="5969"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>

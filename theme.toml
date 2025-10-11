@@ -1,0 +1,40 @@
+# theme.toml template for a Hugo theme
+# See https://github.com/gohugoio/hugoThemes#themetoml for an example
+
+name = "Seven"
+license = "MIT"
+licenselink = "https://github.com/mrhelloboy/seven/blob/main/LICENSE"
+description = "A clean and beautiful Hugo theme, which built using Tailwind CSS."
+homepage = "https://github.com/mrhelloboy/seven"
+demosite = "https://hugoseven.netlify.app/"
+
+tags = [
+  "archive",
+  "blog",
+  "beautiful",
+  "clean",
+  "light",
+  "dark mode",
+  "responsive",
+  "search",
+  "tailwindcss",
+  "personal"
+]
+features = [
+  "responsive",
+  "single-column",
+  "blog",
+  "table-of-contents",
+  "favicon",
+  "disqus",
+  "waline",
+  "archive",
+  "speed-dial",
+  "scroll-to-top",
+  "search"
+]
+min_version = "0.128.0"
+
+[author]
+  name = "mrhelloboy"
+  homepage = "https://github.com/mrhelloboy"

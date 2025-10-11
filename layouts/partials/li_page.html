@@ -1,0 +1,40 @@
+<li
+  x-data="{ isLoaded: false }"
+  class="items-stretch"
+  x-intersect.threshold.30="isLoaded = true">
+  <div x-show="!isLoaded" x-cloak class="h-56 w-full bg-transparent"></div>
+  <div
+    x-show="isLoaded"
+    x-cloak
+    class="group h-full animate-slideTop overflow-hidden rounded-md bg-white/50 shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] backdrop-blur-md transition hover:shadow-md dark:bg-gray-800/70 dark:shadow-[0_5px_15px_rgba(0,0,0,0.35)]">
+    <div class="h-64 w-full md:h-48">
+      {{ with resources.Get .Params.image }}
+        <div
+          x-show="!isLoaded"
+          x-cloak
+          class="h-full w-full bg-transparent"></div>
+        <img
+          x-show="isLoaded"
+          x-cloak
+          :src="'{{ .Permalink }}'"
+          :alt="'{{ .Title }}'"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover" />
+      {{ end }}
+    </div>
+
+    <div class="px-4 py-6 sm:p-6">
+      <p class="hs-content-meta block text-xs text-gray-600 dark:text-gray-400">
+        {{ .Date.Format "2006/01/02" }}
+      </p>
+
+      <a href="{{ .Permalink }}">
+        <p
+          class="hs-content-title mt-2 text-lg text-gray-900 group-hover:text-[--hs-text-color-hover] dark:text-gray-300">
+          {{ .Title }}
+        </p>
+      </a>
+    </div>
+  </div>
+</li>

@@ -1,0 +1,53 @@
+{{/* Waline */}}
+{{ if .Site.Params.comment.waline.enable }}
+  <div id="waline" class="py-5 md:px-2 lg:px-8 dark:text-gray-400"></div>
+
+  {{ $enableCounts := .Site.Params.comment.enableCounts }}
+  {{ $enablePageView := .Site.Params.articleMeta.enablePageView }}
+
+  {{ $serverURL := .Site.Params.comment.waline.serverURL }}
+  {{ $lang := .Site.Params.comment.waline.lang }}
+  {{ $reaction := .Site.Params.comment.waline.reaction }}
+  {{ $search := .Site.Params.comment.waline.search }}
+  {{ $walineInfo := dict "serverURL" $serverURL "lang" $lang "reaction" $reaction "search" $search "enableCounts" $enableCounts "enablePageView" $enablePageView }}
+  {{ $commentWalineJS := resources.Get "/js/waline/index.js" | js.Build (dict "params" $walineInfo) }}
+  {{ if hugo.IsProduction }}
+    {{ $commentWalineJS = $commentWalineJS | minify | fingerprint }}
+  {{ end }}
+  <script
+    defer
+    type="module"
+    src="{{ $commentWalineJS.RelPermalink }}"></script>
+{{ end }}
+
+{{/* Twikoo */}}
+{{ if .Site.Params.comment.twikoo.enable }}
+  <div id="twikoo-comment"></div>
+  {{ $twikooJS := resources.Get "js/third-party/twikoo/v1.6.29/twikoo.all.min.js" }}
+  <script src="{{ $twikooJS.RelPermalink }}" defer></script>
+
+  {{ $enableCounts := .Site.Params.comment.enableCounts }}
+
+  {{ $envId := .Site.Params.comment.twikoo.envID }}
+  {{ $lang := .Site.Params.comment.twikoo.lang }}
+  {{ $path := .Site.Params.comment.twikoo.path }}
+  {{ $region := .Site.Params.comment.twikoo.region }}
+  {{ $twikooInfo := dict "envId" $envId "lang" $lang "path" $path "enableCounts" $enableCounts "region" $region }}
+  {{ $commentTwikooJS := resources.Get "/js/comment-twikoo.js" | js.Build (dict "params" $twikooInfo ) }}
+  {{ if hugo.IsProduction }}
+    {{ $commentTwikooJS = $commentTwikooJS | minify | fingerprint }}
+  {{ end }}
+  <script
+    defer
+    type="module"
+    src="{{ $commentTwikooJS.RelPermalink }}"></script>
+{{ end }}
+
+{{/* Disque */}}
+{{ if hugo.IsProduction }}
+  {{ if .Site.Config.Services.Disqus.Shortname }}
+    <div class="w-full md:px-2 lg:max-w-5xl lg:px-8">
+      {{ template "_internal/disqus.html" . }}
+    </div>
+  {{ end }}
+{{ end }}

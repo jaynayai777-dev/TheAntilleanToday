@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ais-SearchBox {
+  @apply relative w-full;
+}
+
+.ais-SearchBox-form {
+  @apply flex items-center border-b-2 border-gray-400;
+}
+
+.ais-SearchBox-submit {
+  @apply pointer-events-none absolute bottom-0 left-0 top-0 flex items-center pl-3;
+}
+
+.ais-SearchBox-reset {
+  @apply absolute bottom-0 right-0 top-0 items-center pr-3;
+}
+
+.ais-SearchBox-loadingIndicator {
+  @apply pointer-events-none absolute bottom-0 left-0 top-0 hidden items-center pl-3;
+}
+
+.ais-SearchBox-loadingIcon {
+  @apply fill-gray-400 stroke-gray-400 stroke-2;
+}
+
+.ais-SearchBox-input {
+  @apply block w-full rounded-lg border-none bg-transparent p-2 pl-10 font-bold text-gray-400 caret-blue-500 outline-none placeholder:font-normal placeholder:italic placeholder:text-gray-600;
+}
+
+.ais-SearchBox-submitIcon {
+  @apply h-4 w-4 fill-gray-400;
+}
+
+.ais-SearchBox-resetIcon {
+  @apply h-[13px] w-[13px] fill-gray-400 dark:hover:fill-white;
+}
+
+.ais-PoweredBy {
+  @apply flex w-full justify-end;
+}
+
+.ais-PoweredBy-logo {
+  @apply h-4;
+}
+
+.ais-Hits-list {
+  @apply flex flex-col;
+}
+
+.ais-Hits-item {
+  @apply my-1 rounded-lg border border-gray-600 p-3 text-gray-400 hover:bg-gray-900/80 dark:hover:bg-gray-800/80;
+}
+
+.ais-Snippet {
+  @apply text-gray-400;
+}
+
+.ais-Highlight {
+  @apply text-gray-400;
+}
+
+.ais-Snippet-highlighted {
+  @apply bg-transparent text-gray-400 underline decoration-blue-600 decoration-2 underline-offset-4;
+}
+
+.ais-Highlight-highlighted {
+  @apply bg-transparent text-gray-400 underline decoration-blue-600 decoration-2 underline-offset-4;
+}
+
+.ais-Hits.ais-Hits--empty {
+  @apply mx-auto flex justify-center text-lg tracking-wide text-gray-500;
+}

@@ -1,0 +1,24 @@
+readmore: "Read More"
+summary: "Summary"
+
+article:
+  words: "words"
+  minutes: "mins"
+  visits: "visits"
+  comments: "comments"
+
+toc:
+  title: "In this article"
+  mobile_title: "Table of Contents"
+
+search:
+  placeholder: "Search for content"
+  no_result: "No search content"
+  error: "Oop ! Error occur ..."
+  cancel: "Press ESC to cancel"
+  powered_by: "Powered by &nbsp;{{ .Name }}"
+
+footer:
+  powered_by: "Powered by {{ .Hugo }} & {{ .Theme }}"
+
+copyright: "All Rights Reserved"

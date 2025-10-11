@@ -1,0 +1,24 @@
+readmore: "阅读更多"
+summary: "摘要"
+
+article:
+  words: "字数"
+  minutes: "分钟"
+  visits: "阅读量"
+  comments: "评论数"
+
+toc:
+  title: "目录"
+  mobile_title: "目录"
+
+search:
+  placeholder: "请搜索内容"
+  no_result: "找不到搜索内容"
+  error: "噢不！发生了错误 ..."
+  cancel: "按 ESC 取消"
+  powered_by: "由 &nbsp;{{ .Name }}&nbsp; 提供支持"
+
+footer:
+  powered_by: "由{{ .Hugo }} & {{ .Theme }}提供支持"
+
+copyright: "版权所有"

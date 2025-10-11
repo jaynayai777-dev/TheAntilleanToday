@@ -1,0 +1,56 @@
+<footer
+  id="footer"
+  x-ref="footer"
+  class="hs-footer mx-auto mt-5 flex flex-col items-center gap-y-3 py-6 text-xs text-gray-700 dark:text-gray-500">
+  <span class="h-px w-full max-w-4xl bg-gray-700 dark:bg-gray-600"></span>
+
+  <div class="flex h-5 space-x-3">
+    {{ partial "footer/follow_me.html" . }}
+  </div>
+
+  {{ $hugo := printf `<a href="https://gohugo.io/" aria-label="hugo link">
+    <img
+    src="/images/default/hugo-logo-wide.svg"
+    alt="Hugo"
+    class="mx-1 h-3" />
+    </a>`
+  }}
+  {{ $seven := printf `<a
+    href="https://github.com/mrhelloboy/seven"
+    aria-label="The github address of seven theme">
+    <img
+    x-show="!$store.darkMode.on"
+    x-cloak
+    id="footer-theme-light-logo"
+    src="/images/default/seven-logo.svg"
+    alt="seven theme logo"
+    class="mx-1 h-5" />
+
+    <img
+    x-show="$store.darkMode.on"
+    x-cloak
+    id="footer-theme-dark-logo"
+    src="/images/default/seven-logo-dark.svg"
+    alt="seven theme logo"
+    class="mx-1 h-5" />
+    </a>`
+  }}
+  <span x-data class="flex flex-row items-center justify-center"
+    >{{ T "footer.powered_by" (dict "Hugo" $hugo "Theme" $seven) | safeHTML }}</span
+  >
+
+  <span class="flex flex-col items-center justify-between space-y-3">
+    &copy;
+    {{ $startYear := .Site.Params.copyright.startYear }}
+    {{ $currentYear := now.Format "2006" }}
+    {{ with eq $startYear $currentYear }}
+      {{ $currentYear }}
+    {{ else }}
+      {{ $startYear }} -
+      {{ $currentYear }}
+    {{ end }}
+
+    {{ .Site.Params.copyright.owner }}
+    {{ T "copyright" }}
+  </span>
+</footer>

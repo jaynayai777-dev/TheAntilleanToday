@@ -1,0 +1,20 @@
+{{ with .Site.Params.search.enable }}
+  <div class="flex size-10">
+    <button
+      type="button"
+      id="search-icon"
+      class="rounded-full p-2.5 text-center text-black transition hover:bg-white hover:shadow-[0_7px_29px_0_rgba(100,100,111,0.2)] dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:shadow-[0_5px_15px_rgba(0,0,0,0.35)]">
+      <svg
+        class="h-5 w-5"
+        fill="currentColor"
+        viewBox="0 0 1024 1024"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        p-id="4284">
+        <path
+          d="M769.323 708.992l182.741 182.699-60.373 60.373-182.699-182.741a382.293 382.293 0 0 1-239.659 84.01c-211.968 0-384-172.032-384-384s172.032-384 384-384 384 172.032 384 384a382.293 382.293 0 0 1-84.01 239.659z m-85.59-31.659a297.685 297.685 0 0 0 84.267-208c0-165.034-133.675-298.666-298.667-298.666-165.034 0-298.666 133.632-298.666 298.666C170.667 634.325 304.299 768 469.333 768a297.685 297.685 0 0 0 208-84.267l6.4-6.4z"
+          p-id="4285"></path>
+      </svg>
+    </button>
+  </div>
+{{ end }}
