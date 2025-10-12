@@ -1,5 +1,8 @@
 baseURL = "https://jaynayai777-dev.github.io/TheAntilleanToday/"
 title = "The Antillean Today"
+languageCode = "en-us"
+theme = "seven"
+
 
 hasCJKLanguage = true
 defaultContentLanguage = "en"
