@@ -19,6 +19,7 @@ expertMode = true
 [[ports]]
 localPort = 1313
 externalPort = 3000
+exposeLocalhost = true
 
 [[ports]]
 localPort = 3000

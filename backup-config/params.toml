@@ -1,0 +1,10 @@
+[params]
+  showAuthor = true
+  showDate = true
+  showReadingTime = true
+  showSummary = true
+
+  logo = "/img/logo.png"
+  favicon = "/img/favicon.ico"
+
+  footerText = "© 2025 The Antillean Today. All rights reserved."

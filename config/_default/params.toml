@@ -1,0 +1,28 @@
+# config/_default/params.toml
+
+# General
+colorScheme = "auto"          # light, dark, or auto
+showAuthor = true
+showDate = true
+showReadingTime = true
+showShareButtons = true
+homepageLayout = "grid"       # grid, list, or masonry
+
+# Branding
+siteLogo = "/images/logo.png" # put your logo in /static/images/
+favicon = "/images/favicon.ico"
+
+# Homepage hero section
+showHero = true
+heroTitle = "Antillean Today"
+heroSubtitle = "Independent Caribbean journalism"
+heroImage = "/images/hero.png"
+
+# Sidebar
+showSidebar = true
+showRecentPosts = true
+showCategories = true
+showTags = true
+
+# Footer
+footerText = "© {{ now.Year }} The Antillean Today. Powered by Hugo & Newsroom."

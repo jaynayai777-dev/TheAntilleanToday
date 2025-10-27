@@ -11,7 +11,7 @@
       "tailwindcss": "project"
     }
   },
-  "description": "Personal blog theme of Hugo",
+  "description": "The Antillean Today site using Newsroom theme",
   "devDependencies": {
     "@waline/client": "^3.1.3",
     "autoprefixer": "^10.4.19",
@@ -21,6 +21,6 @@
     "tailwindcss": "^3.4.3"
   },
   "license": "MIT",
-  "name": "seven",
+  "name": "theantilleantoday",
   "version": "1.0.0"
 }

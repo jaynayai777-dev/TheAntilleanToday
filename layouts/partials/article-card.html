@@ -1,0 +1,18 @@
+<article class="bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
+  {{ with .Params.featured_image }}
+    <a href="{{ .Permalink }}">
+      <img src="{{ . }}" alt="{{ $.Title }}" class="w-full h-48 object-cover">
+    </a>
+  {{ end }}
+  <div class="p-4">
+    <h2 class="text-xl font-semibold mb-2">
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </h2>
+    {{ with .Params.summary }}
+      <p class="text-gray-600 dark:text-gray-300">{{ . }}</p>
+    {{ end }}
+    <p class="text-sm text-gray-500 mt-2">
+      {{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} min read
+    </p>
+  </div>
+</article>
